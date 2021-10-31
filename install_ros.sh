@@ -52,10 +52,11 @@ function install_ros_full() {
         $PYTHON_EXEC-rosinstall-generator \
         $PYTHON_EXEC-wstool \
         $PYTHON_EXEC-catkin-tools \
+        $PYTHON_EXEC-osrf-pycommon \
         $PYTHON_EXEC-pip
     setup_ros_env
     source $HOME/.bashrc
-    rosdep init
+    sudo rosdep init
     rosdep update --rosdistro $ROS_RELEASE
 }
 
@@ -130,17 +131,22 @@ function install_ros_rpi() {
     sudo apt update
     sudo apt install -y ros-$ROS_RELEASE-ros-base
     sudo apt install -y \
+        $PYTHON_EXEC-rosdep \
         $PYTHON_EXEC-catkin-tools \
-        $PYTHON_EXEC-pip
+        $PYTHON_EXEC-osrf-pycommon \
+        $PYTHON_EXEC-pip \
         ros-$ROS_RELEASE-socketcan-interface \
         ros-$ROS_RELEASE-rosserial-server \
         ros-$ROS_RELEASE-ros-control \
         ros-$ROS_RELEASE-sensor-msgs \
-        ros-$ROS_RELEASE-joint-state-publisher
+        ros-$ROS_RELEASE-joint-state-publisher \
+        ros-$ROS_RELEASE-joy \
+        ros-$ROS_RELEASE-twist-mux \
+        ros-$ROS_RELEASE-teleop-twist-joy
     setup_ros_network_autoconfig
     setup_ros_env
     source $HOME/.bashrc
-    rosdep init
+    sudo rosdep init
     rosdep update --rosdistro $ROS_RELEASE
 }
 
