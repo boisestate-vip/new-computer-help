@@ -72,7 +72,7 @@ function get_mac_address() {
 }
 
 function setup_rpi_wap() {
-    sudo apt install -y network-manager
+    sudo apt install -y network-manager net-tools
     local hotspot_cfg_file=/etc/netplan/10-hotspot-config.yaml
     if [ -f $hotspot_cfg_file ]; then
         echo 'Hotspot already configured. Skipping.'
@@ -107,6 +107,7 @@ function setup_ros_network_autoconfig() {
         cd /tmp 
         mkdir -p network_autoconfig && cd network_autoconfig
         git clone https://github.com/LucidOne/network_autoconfig.git src
+	cd /tmp
         mkdir /opt/ros/$ROS_RELEASE/pkgs
         sudo mv /tmp/network_autoconfig /opt/ros/$ROS_RELEASE/pkgs/
         local pkgdir=/opt/ros/$ROS_RELEASE/pkgs/network_autoconfig
@@ -151,11 +152,10 @@ function install_ros_rpi() {
 }
 
 function install_all_rpi() {
-    sudo echo 'ubuntu-rpi' > /etc/hostname
     sudo apt update
     sudo apt dist-upgrade -y
     sudo apt install -y \
-        build-essentials \
+        build-essential \
         openssh-server \
         git \
         vim \
@@ -164,9 +164,9 @@ function install_all_rpi() {
         avahi-daemon \
         libusb-1.0-0-dev \
         screen
-    setup_rpi_wap
     setup_teensy_udev
     install_ros_rpi
+    setup_rpi_wap
 }
 
 if [[ $# -ne 1 || ($1 == "--help") || ($1 == "-h") ]]
@@ -185,3 +185,4 @@ else
         install_all_rpi
     fi
 fi
+
