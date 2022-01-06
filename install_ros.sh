@@ -42,7 +42,7 @@ function setup_ros_keys() {
 }
 
 function install_ros_full() {
-    sudo apt install git vim meld build-essential libfontconfig1 mesa-common-dev libglu1-mesa-dev curl
+    sudo apt install -y git vim meld build-essential libfontconfig1 mesa-common-dev libglu1-mesa-dev curl
     setup_ros_keys
     sudo apt update
     sudo apt install -y ros-$ROS_RELEASE-desktop-full
@@ -179,7 +179,7 @@ if [[ "$(whoami)" != "root" ]]; then
     echo "Error: Script must be run as super user or with sudo."
     exit 1
 else
-    if [[ $1 == "full" ]]; then
+    if [[ $1 == "desktop" ]]; then
         install_ros_full
     elif [[ $1 == "rpi" ]]; then
         install_all_rpi
